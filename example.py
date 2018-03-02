@@ -9,10 +9,11 @@ auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
 twitter = tweepy.API(auth)
 
-
-user = twitter.get_user("MogleTanner")
-# print(user.screen_name)
-print(twitter.user_timeline("MogleTanner"))
-
-# user = twitter.get_user("MogleTanner"))
-# mongo_db_object.insert_one(user._json)
+with open('bots.txt', 'r') as bots:
+    for line in bots.readlines():
+        # user = twitter.get_user("MogleTanner")
+        user = twitter.get_user(line.strip())
+        # print(user.screen_name)
+        print(twitter.user_timeline(line.strip()))
+        # user = twitter.get_user("MogleTanner"))
+        # mongo_db_object.insert_one(user._json)

@@ -1,0 +1,43 @@
+Use stream api to track a certain user or users and get their tweets
+
+Search is only 7 days old and is hard to use apparently
+
+Use mongodb to store, works well with the json
+
+
+
+frequency of post: avg per hour for last week
+avg retweet_count per tweet
+avg reply_count per tweet
+avg quote_count per tweet
+avg favorite_count per tweet
+
+user mentions, symbols, media, urls, hashtags
+
+USE VERIFIED TWITTER ACCOUNTS FOR REAL PEOPLE
+
+for each user account:
+	save the user data
+		verified
+		has_url
+		protected
+		followers_count
+		friends_count
+		listed_count
+		favorites_count
+		statuses_count
+		contributors_enabled
+		default_profile
+		
+	loop through all their tweets for the past x days
+		figure out regularity of tweets,
+		figure out frequency of tweets,
+		quote_count,
+		retweet_count,
+		reply_count,
+		favorite_count
+		user mentions,
+		symbols,
+		media,
+		urls,
+		hashtags as a boolean or an average (uses or doesn't use)

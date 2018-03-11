@@ -5,6 +5,7 @@ import uuid
 import random
 import datetime
 import collections
+import jsonpickle
 
 CONSUMER_KEY = 	"lH6LtU3XbHIrm1fjA9VGgZUgJ"
 CONSUMER_SECRET = "k2bDhO2eOteZ4QqH8XXNBLRuC45nPWjEgRxahhFJ0p0Iu7GyBK"
@@ -28,7 +29,7 @@ class twitter_data(object):
         self.statuses_count = statuses_count
         self.contributors_enabled = contributors_enabled
         self.default_profile = default_profile
-        self.default_profile_image
+        self.default_profile_image = default_profile_image
         self.quote_avg = quote_avg
         self.retweet_avg = retweet_avg
         self.reply_avg = reply_avg
@@ -43,25 +44,8 @@ class twitter_data(object):
         self.tweet_regularity = tweet_regularity
 
 def get_data_object(user):
-    user = twitter.get_user(line.strip())
-    print("\n\nTesting user access")
-    print(user.name)
-    print(user.id)
-    print(user.id_str)
-    print(user.verified)
-    print(user.url)
-    print(user.protected)
-    print(user.followers_count)
-    print(user.friends_count)
-    print(user.listed_count)
-    print(user.favourites_count)
-    print(user.statuses_count)
-    print(user.contributors_enabled)
-    print(user.default_profile)
-    print(user.default_profile_image)
-    # timeline = twitter.user_timeline(user.id, count=3)
+    # TODO maybe use more tweets?
     timeline = twitter.user_timeline(user.id, count=100)
-    # print("getting an example tweet out of {} tweets".format(len(timeline)))
     oldest_date = datetime.datetime.now()
     tweet_times = []
     quote_count = 0
@@ -73,47 +57,34 @@ def get_data_object(user):
     urls_count = 0
     hashtags_count = 0
     media_count = 0
+
+    # loop through tweets in timeline
     for tweet in timeline:
-        # print(type(tweet.created_at))
-        # print(tweet.created_at)
-        # print(len(tweet.text))
-        # print("------------------start text---------------------")
-        # print(tweet.text)
-        # print("-------------------end text----------------------")
-        # print(tweet.source)
-        # print(tweet.entities)
-        # TODO frequency and regularity of tweets (use mode for regularity?)
         if tweet.created_at < oldest_date:
             oldest_date = tweet.created_at
         tweet_times.append(tweet.created_at)
+        # for some reason these don't work
         # quote_count += tweet.quote_count if tweet.quote_count is not None else 0
         # reply_count += tweet.reply_count
         retweet_count += tweet.retweet_count
         favorite_count += tweet.favorite_count if tweet.favorite_count is not None else 0
         entities = tweet.entities
-        # print(entities.keys())
         user_mentions_count += len(entities["user_mentions"]) if "user_mentions" in entities else 0
         symbols_count += len(entities["symbols"]) if "symbols" in entities else 0
         urls_count += len(entities["urls"]) if "urls" in entities else 0
         hashtags_count += len(entities["hashtags"]) if "hashtags" in entities else 0
         media_count += len(entities["media"]) if "media" in entities else 0
+
     # get the number of days old the oldest tweet is
     delta_time = datetime.datetime.now() - oldest_date
-    print("Delta_time:\n{}".format(delta_time))
     # calculate time between tweets
-    print("calculating time in between tweets")
     delta_times = []
     for i in range(len(tweet_times) -1):
         delta_times.append(tweet_times[i + 1] - tweet_times[i])
     counter = collections.Counter(delta_times)
-    # print(delta_times)
-    # print(counter)
-    # print(counter.most_common(2))
-    # print(counter.most_common(1)[0][1])
     tweet_regularity = counter.most_common(1)[0][1]
 
-
-    print("finished analyzing timeline")
+    # Calculate averages
     quote_avg = quote_count / len(timeline)
     retweet_avg = retweet_count / len(timeline)
     reply_avg = reply_count / len(timeline)
@@ -124,17 +95,10 @@ def get_data_object(user):
     hashtags_avg = hashtags_count / len(timeline)
     media_avg = media_count / len(timeline)
     avg_num_tweets = len(timeline) / (delta_time.total_seconds() / (60 * 60 * 24))
-    print(quote_avg)
-    print(retweet_avg)
-    print(reply_avg)
-    print(favorite_avg)
-    print(user_mentions_avg)
-    print(symbols_avg)
-    print(urls_avg)
-    print(hashtags_avg)
-    print(media_avg)
-    print("Avg num tweets/day: {}".format(avg_num_tweets))
-    print("Tweet regularity: {}".format(tweet_regularity))
+
+    # Build and return return object
+    ret_obj = twitter_data(user.verified, user.url, user.protected, user.followers_count, user.friends_count, user.listed_count, user.favourites_count, user.statuses_count, user.contributors_enabled, user.default_profile, user.default_profile_image, quote_avg, retweet_avg, reply_avg, favorite_avg, user_mentions_avg, symbols_avg, urls_avg, hashtags_avg, media_avg, avg_num_tweets, tweet_regularity)
+    return ret_obj
 
 
 with open('bots.txt', 'r') as bots:
@@ -142,13 +106,20 @@ with open('bots.txt', 'r') as bots:
     for line in bots.readlines():
         count += 1
         # user = twitter.get_user("MogleTanner")
+        user = twitter.get_user(line.strip())
+        twitter_data_obj = get_data_object(user)
+        json = jsonpickle.encode(twitter_data_obj)
+        other_data_obj = jsonpickle.decode(json)
+        if twitter_data_obj.avg_num_tweets != other_data_obj.avg_num_tweets:
+            print("CRAP THIS ISN'T WORKING")
+        print("crap this worked!")
+        print(json)
 
-        if count > 3:
-            break
-        # break
-#
-#         # print(twitter.user_timeline(line.strip()))
-#         # mongo_db_object.insert_one(user._json)
+        # if count > 3:
+        #     break
+        break
+    
+        # mongo_db_object.insert_one(user._json)
 
 
 # random_id = random_id % 10000000

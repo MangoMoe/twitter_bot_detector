@@ -32,6 +32,7 @@ for each user account:
 	loop through all their tweets for the past x days
 		figure out regularity of tweets,
 		figure out frequency of tweets,
+		average length of tweets,
 		quote_count,
 		retweet_count,
 		reply_count,

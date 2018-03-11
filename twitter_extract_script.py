@@ -108,45 +108,22 @@ with open('bots.txt', 'r') as bots:
         # user = twitter.get_user("MogleTanner")
         user = twitter.get_user(line.strip())
         twitter_data_obj = get_data_object(user)
+        # SAVE THIS JSON
         json = jsonpickle.encode(twitter_data_obj)
-        other_data_obj = jsonpickle.decode(json)
-        if twitter_data_obj.avg_num_tweets != other_data_obj.avg_num_tweets:
-            print("CRAP THIS ISN'T WORKING")
-        print("crap this worked!")
+
+        # here is an example of how to decode this later if we want to
+        # other_data_obj = jsonpickle.decode(json)
+
         print(json)
 
         # if count > 3:
         #     break
-        break
+        # break
     
         # mongo_db_object.insert_one(user._json)
 
-
-# random_id = random_id % 10000000
-# while True:
-#     try:
-#         # random_id = uuid.uuid4().int>>64 %  1000000000000000000
-#         # random_id = uuid.uuid4().int>>64 %  100000000000000000
-#         # random_id = uuid.uuid4().int & (1<<64)-1 %  1000000000000000000
-#         # 932686855740338177
-#         random_id = random.getrandbits(64) %  1000000000000000000
-#         print("Generated id: \n{}\n{}".format(random_id, 932686855740338177))
-#         user = twitter.get_user(random_id)
-#         break
-#     except tweepy.error.TweepError:
-#         print("Failed to find a correct id, better try again")
-
-# print("We found one")
-# print(user.name)
-# print(user.id)
-# print(user.verified)
-# print(user.url)
-# print(user.protected)
-# print(user.followers_count)
-# print(user.friends_count)
-# print(user.listed_count)
-# print(user.favourites_count)
-# print(user.statuses_count)
-# print(user.contributors_enabled)
-# print(user.default_profile)
-# print(user.default_profile_image)
+# notes for how to stream random user
+# stream = tweepy.Stream()
+# stream.filter
+# extend tweepy.streamlistener
+# on_status

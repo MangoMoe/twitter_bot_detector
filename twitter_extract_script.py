@@ -3,6 +3,7 @@ import tweepy
 import datetime
 import collections
 import jsonpickle
+import pyprog
 from pymongo import MongoClient
 
 CONSUMER_KEY = "lH6LtU3XbHIrm1fjA9VGgZUgJ"
@@ -114,22 +115,32 @@ def get_data_object(twitter_handle, user):
     counter = collections.Counter(delta_times)
     tweet_regularity = 0
     avg_num_tweets = 0
+    quote_avg = 0
+    retweet_avg = 0
+    reply_avg = 0
+    favorite_avg = 0
+    user_mentions_avg = 0
+    symbols_avg = 0
+    urls_avg = 0
+    hashtags_avg = 0
+    media_avg = 0
     try:
         tweet_regularity = counter.most_common(1)[0][1]
         avg_num_tweets = len(timeline) / (delta_time.total_seconds() / (60 * 60 * 24))
+        quote_avg = quote_count / len(timeline)
+        retweet_avg = retweet_count / len(timeline)
+        reply_avg = reply_count / len(timeline)
+        favorite_avg = favorite_count / len(timeline)
+        user_mentions_avg = user_mentions_count / len(timeline)
+        symbols_avg = symbols_count / len(timeline)
+        urls_avg = urls_count / len(timeline)
+        hashtags_avg = hashtags_count / len(timeline)
+        media_avg = media_count / len(timeline)
     except (IndexError, ZeroDivisionError) as err:
-        print(f"No tweets for {twitter_handle}")
+        # print(f"No tweets for {twitter_handle}")
+        pass
 
     # Calculate averages
-    quote_avg = quote_count / len(timeline)
-    retweet_avg = retweet_count / len(timeline)
-    reply_avg = reply_count / len(timeline)
-    favorite_avg = favorite_count / len(timeline)
-    user_mentions_avg = user_mentions_count / len(timeline)
-    symbols_avg = symbols_count / len(timeline)
-    urls_avg = urls_count / len(timeline)
-    hashtags_avg = hashtags_count / len(timeline)
-    media_avg = media_count / len(timeline)
 
     # Build and return return object
     ret_obj = twitter_data(
@@ -161,10 +172,20 @@ def get_data_object(twitter_handle, user):
 
 client = MongoClient("mongodb+srv://twitter:0iNKWU6DMrvMNL6v@twitterbot-h85qm.mongodb.net/test")
 db = client.twitterdb
-with open('bots.text', 'r') as bots:
+with open('real_users.txt', 'r') as bots:
     count = 0
-    for line in bots.readlines():
+    bar = pyprog.ProgressBar("\t\t", " ", total=2001, bar_length=50, complete_symbol="=",
+                             not_complete_symbol=" ", wrap_bar_prefix=" [", wrap_bar_suffix="] ",
+                             progress_explain="", progress_loc=pyprog.ProgressBar.PROGRESS_LOC_END)
+    prog = pyprog.ProgressIndicatorFraction(" ", " ", 2001)
+    bar.update()
+    prog.update()
+    for i, line in enumerate(bots.readlines()):
         count += 1
+        bar.set_stat(i + 1)
+        bar.update()
+        prog.set_stat(i + 1)
+        prog.update()
         # user = twitter.get_user("MogleTanner")
         try:
             twitter_handle = line.strip()
@@ -178,14 +199,17 @@ with open('bots.text', 'r') as bots:
                 # here is an example of how to decode this later if we want to
                 # other_data_obj = jsonpickle.decode(json)
 
-                db.data.insert_one({"user": twitter_handle, "data": json})
-            else:
-                print(f"{twitter_handle} already in db.")
+                db.data.insert_one({"user": twitter_handle, "data": json, "type": "user"})
+            # else:
+            #     print(f"{twitter_handle} already in db.")
         except tweepy.TweepError as err:
-            print(f"Failed for {twitter_handle}:")
-            print(f"\t{err}")
+            # print(f"Failed for {twitter_handle}:")
+            # print(f"\t{err}")
+            continue
 
         # mongo_db_object.insert_one(user._json)
+    bar.end()
+    prog.end()
 
 # notes for how to stream random user
 # stream = tweepy.Stream()

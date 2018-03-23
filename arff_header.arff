@@ -1,0 +1,102 @@
+% 1. Title: Twitter Bots
+%
+% 2. Sources:
+%     1. Twitter API
+%     2. BotWiki.org
+%
+% 3.  Past Usage:
+%     CS478 Group Project
+%
+% 4.  Relevant Information:
+%
+%     This dataset contains various information gathered on
+%     twitter users and known twitter bots. The known bots come
+%     from the botwiki.org list and the actual human users come
+%     from web scrapping of Twitter.
+%
+% 5.  Number of Instances: ###
+%
+% 6.  Number of Attributes: 23 + class attribute
+%
+% 7.  Attribute Information:
+%
+        verified,
+        url,
+        protected,
+        followers_count,
+        friends_count,
+        listed_count,
+        favorites_count,
+        statuses_count,
+        contributors_enabled,
+        default_profile,
+        default_profile_image,
+        quote_avg,
+        retweet_avg,
+        reply_avg,
+        favorite_avg,
+        user_mentions_avg,
+        symbols_avg,
+        urls_avg,
+        hashtags_avg,
+        media_avg,
+        avg_num_tweets,
+        tweet_regularity
+
+%     A1:	b, a.
+%     A2:	continuous.
+%     A3:	continuous.
+%     A4:	u, y, l, t.
+%     A5:	g, p, gg.
+%     A6:	c, d, cc, i, j, k, m, r, q, w, x, e, aa, ff.
+%     A7:	v, h, bb, j, n, z, dd, ff, o.
+%     A8:	continuous.
+%     A9:	t, f.
+%     A10:	t, f.
+%     A11:	continuous.
+%     A12:	t, f.
+%     A13:	g, p, s.
+%     A14:	continuous.
+%     A15:	continuous.
+%     A16: +,-         (class attribute)
+%
+% 8.  Missing Attribute Values:
+%     37 cases (5%) have one or more missing values.  The missing
+%     values from particular attributes are:
+%
+%     A1:  12
+%     A2:  12
+%     A4:   6
+%     A5:   6
+%     A6:   9
+%     A7:   9
+%     A14: 13
+%
+% 9.  Class Distribution
+%
+%     +: 307 (44.5%)
+%     -: 383 (55.5%)
+
+@relation credit-rating
+
+@attribute A1		{b,a}
+@attribute A2		REAL
+@attribute A3		REAL
+@attribute A4		{u, y, l, t}
+@attribute A5		{g, p, gg}
+@attribute A6		{c, d, cc, i, j, k, m, r, q, w, x, e, aa, ff}
+@attribute A7		{v, h, bb, j, n, z, dd, ff, o}
+@attribute A8		REAL
+@attribute A9		{t,f}
+@attribute A10		{t,f}
+@attribute A11		REAL
+@attribute A12		{t,f}
+@attribute A13		{g, p, s}
+@attribute A14		REAL
+@attribute A15		REAL
+@attribute class	{+, -}
+
+@data
+%
+% 690 instances
+%

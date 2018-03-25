@@ -4,3 +4,4 @@
 venv
 .idea/
 scratch.py
+*.pyc

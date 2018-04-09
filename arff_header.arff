@@ -20,29 +20,29 @@
 %
 % 7.  Attribute Information:
 %
-%     A1:	continuous.
-%     A2:	t, f.
-%     A3:	t, f.
-%     A4:	t, f.
-%     A5:	continuous.
-%     A6:	continuous.
-%     A7:	continuous.
-%     A8:	continuous.
-%     A9:	continuous.
-%     A10:	continuous.
-%     A11:	continuous.
-%     A12:	t, f.
-%     A13:	continuous.
-%     A14:	continuous.
-%     A15:	continuous.
-%     A16:	continuous.
-%     A17:	continuous.
-%     A18:	continuous.
-%     A19:	t, f.
-%     A20:	continuous.
-%     A21:	continuous.
-%     A22:	t, f.
-%     A23:  bot, user         (class attribute)
+%     1.  Average Number of Tweets:	continuous.
+%     2.  Contributors Enables:  	t, f.
+%     3.  Default Profile:       	t, f.
+%     4.  Default Profile Image:  	t, f.
+%     5.  Favorite Average:       	continuous.
+%     6.  Favorites Count:       	continuous.
+%     7.  Followers Count:         	continuous.
+%     8.  Friends Count:          	continuous.
+%     9.  Hashtags Average:       	continuous.
+%     10. Listed Count:            	continuous.
+%     11. Media Average:           	continuous.
+%     12. Protected:            	t, f.
+%     13. Quote Average:        	continuous.
+%     14. Reply Average:        	continuous.
+%     15. Retweet Average:      	continuous.
+%     16. Statuses Count:       	continuous.
+%     17. Symbols Average:      	continuous.
+%     18. Tweet Regularity:     	continuous.
+%     19. URL:                  	t, f.
+%     20. URLs Average:         	continuous.
+%     21. User Mentions Average:	continuous.
+%     22. Verified:             	t, f.
+%     23. Account Type:             bot, user         (class attribute)
 %
 % 8.  Missing Attribute Values:
 %     No missing values
@@ -52,30 +52,54 @@
 %     bot:   567 (23.5%)
 %     user: 1845 (76.5%)
 
+
+# "": 8.195682276128494,
+# "": false,
+# "": false,
+# "": false,
+# "": 0.01,
+# "": 11,
+# "": 9,
+# "": 23,
+# "": 0.0,
+# "": 0,
+# "": 0.0,
+# "": false,
+# "": 0.0,
+# "": 0.0,
+# "": 0.0,
+# "": 794,
+# "": 0.0,
+# "": 2,
+# "": false,
+# "": 0.0,
+# "": 0.0,
+# "": false
+
 @relation twitter-bot
-@attribute A1       REAL
-@attribute A2       {t,f}
-@attribute A3       {t,f}
-@attribute A4       {t,f}
-@attribute A5       REAL
-@attribute A6       REAL
-@attribute A7       REAL
-@attribute A8       REAL
-@attribute A9       REAL
-@attribute A10      REAL
-@attribute A11      REAL
-@attribute A12      {t,f}
-@attribute A13      REAL
-@attribute A14      REAL
-@attribute A15      REAL
-@attribute A16      REAL
-@attribute A17      REAL
-@attribute A18      REAL
-@attribute A19      {t,f}
-@attribute A20      REAL
-@attribute A21      REAL
-@attribute A22      {t,f}
-@attribute A23      {bot,user}
+@attribute avg_num_tweets           REAL
+@attribute contributors_enabled     {t,f}
+@attribute default_profile          {t,f}
+@attribute default_profile_image    {t,f}
+@attribute favorite_avg             REAL
+@attribute favorites_count          REAL
+@attribute followers_count          REAL
+@attribute friends_count            REAL
+@attribute hashtags_avg             REAL
+@attribute listed_count             REAL
+@attribute media_avg                REAL
+@attribute protected                {t,f}
+@attribute quote_avg                REAL
+@attribute reply_avg                REAL
+@attribute retweet_avg              REAL
+@attribute statuses_count           REAL
+@attribute symbols_avg              REAL
+@attribute tweet_regularity         REAL
+@attribute url                      {t,f}
+@attribute urls_avg                 REAL
+@attribute user_mentions_avg        REAL
+@attribute verified                 {t,f}
+@attribute type                     {bot,user}
 
 @data
 %

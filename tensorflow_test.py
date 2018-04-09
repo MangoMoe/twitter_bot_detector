@@ -19,7 +19,10 @@ def main(argv):
     args = parser.parse_args(argv[1:])
 
     # Fetch the data
-    (train_x, train_y), (test_x, test_y) = data_extractor.load_data()
+    # (train_x, train_y), (test_x, test_y) = data_extractor.load_data()
+    # (train_x, train_y), (test_x, test_y) = data_extractor.load_data(0.9)
+    (train_x, train_y), (test_x, test_y) = data_extractor.load_data(0.1)
+    # (train_x, train_y), (test_x, test_y) = data_extractor.load_data(0.05)
 
     # Feature columns describe how to use the input.
     my_feature_columns = []
@@ -31,9 +34,25 @@ def main(argv):
         feature_columns=my_feature_columns,
         # Two hidden layers of 10 nodes each.
         # hidden_units=[10, 10],
-        hidden_units=[30, 30, 30],
+        # hidden_units=[30, 30, 30],
+        # hidden_units=[100] * 20,
+        hidden_units=[100] * 3,
+        # hidden_units=[1024] * 5,
+        # hidden_units=[1024, 512, 256],
         # The model must choose between 2 classes.
         n_classes=2)
+
+    # classifier = tf.estimator.DNNClassifier(
+    #     feature_columns=my_feature_columns,
+    #     hidden_units=[1024, 512, 256])
+
+    # classifier = tf.estimator.DNNClassifier(
+    #     feature_columns=my_feature_columns,
+    #     hidden_units=[1024, 512, 256],
+    #     optimizer=tf.train.ProximalAdagradOptimizer(
+    #       learning_rate=0.1,
+    #       l1_regularization_strength=0.001
+    #     ))
 
     # Train the Model.
     classifier.train(

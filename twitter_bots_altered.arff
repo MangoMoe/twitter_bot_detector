@@ -20,29 +20,29 @@
 %
 % 7.  Attribute Information:
 %
-%     username:	continuous.
-%     tweets_per_day:	        t, f.
+%     tweets_per_day:			continuous.
 %     contributors_enabled:	    t, f.
-%     default_profile:	        t, f.
-%     default_profile_image:	continuous.
-%     tot_favorites:	        continuous.
+%     default_profile:	    	t, f.
+%     default_profile_image:	t, f.
+%     tot_favorites:			continuous.
 %     tot_followers:	        continuous.
-%     num_friends:	            continuous.
-%     listed_couont:	        continuous.
+%     num_friends:	        	continuous.
+%     listed_count:	            continuous.
 %     avg_hashtags_per_tweet:	continuous.
-%     protected:	            continuous.
-%     media_avg:	t, f.
-%     favorites_avg:	    continuous.
-%     quote_avg:	continuous.
-%     reply_avg:	continuous.
-%     retweet_avg:	continuous.
-%     urls_avg:	continuous.
-%     user_mentions_avg:	continuous.
-%     symbols_avg:	t, f.
-%     statuses_count:	continuous.
-%     tweet_regularity:	continuous.
-%     url:	t, f.
-%     verified:  bot, user         (class attribute)
+%     protected:				continuous.
+%     media_avg:	            continuous.
+%     favorites_avg:			t, f.
+%     quote_avg:	    		continuous.
+%     reply_avg:				continuous.
+%     retweet_avg:				continuous.
+%     urls_avg:					continuous.
+%     user_mentions_avg:		continuous.
+%     symbols_avg:				continuous.
+%     statuses_count:			t, f.
+%     tweet_regularity:			continuous.
+%     url:						continuous.
+%     verified:					t, f.
+%     classification:  			bot, user         (class attribute)
 %
 % 8.  Missing Attribute Values:
 %     No missing values
@@ -53,29 +53,29 @@
 %     user: 1845 (76.5%)
 
 @relation twitter-bot
-@attribute username                     REAL
-@attribute tweets_per_day               {'t','f'}
-@attribute contributors_enabled         {'t','f'}
-@attribute default_profile              {'t','f'}
-@attribute default_profile_image        REAL
-@attribute tot_favorites                REAL
-@attribute tot_followers                REAL
-@attribute num_friends                  REAL
-@attribute listed_couont                REAL
-@attribute avg_hashtags_per_tweet       REAL
-@attribute protected                    REAL
-@attribute media_avg                    {'t','f'}
-@attribute favorites_avg                REAL
-@attribute quote_avg                    REAL
-@attribute reply_avg                    REAL
-@attribute retweet_avg                  REAL
-@attribute urls_avg                     REAL
-@attribute user_mentions_avg            REAL
-@attribute symbols_avg                  {'t','f'}
-@attribute statuses_count               REAL
-@attribute tweet_regularity             REAL
-@attribute url                          {'t','f'}
-@attribute verified                     {'bot','user'}
+@attribute tweets_per_day           REAL
+@attribute contributors_enabled     {'t','f'}	
+@attribute default_profile         	{'t','f'}	
+@attribute default_profile_image    {'t','f'}	
+@attribute tot_favorites        	REAL 		
+@attribute tot_followers            REAL 		
+@attribute num_friends              REAL 		
+@attribute listed_count             REAL 		
+@attribute avg_hashtags_per_tweet   REAL 		
+@attribute protected       			REAL 		
+@attribute media_avg                REAL 		
+@attribute favorites_avg            {'t','f'} 	
+@attribute quote_avg                REAL 		
+@attribute reply_avg                REAL 		
+@attribute retweet_avg              REAL 		
+@attribute urls_avg                 REAL 		
+@attribute user_mentions_avg        REAL 		
+@attribute symbols_avg            	REAL        
+@attribute statuses_count           {'t','f'}   
+@attribute tweet_regularity         REAL
+@attribute url             			REAL
+@attribute verified                 {'t','f'}
+@attribute classification           {'bot','user'}
 
 @data
 %

@@ -8,7 +8,7 @@ import numpy as np
 ##### Twitter dataset
 print("\n\nTwitter dataset\n")
 
-file_name = "/home/drc95/Documents/school/478cs/twitterbotcs478/twitter_bots.arff"
+file_name = "/home/drc95/Documents/school/478cs/twitterbotcs478/twitter_bots_altered.arff"
 data = Matrix()
 data.load_arff(file_name)
 
@@ -34,45 +34,83 @@ test_labels = Matrix(test_data, 0, test_data.cols-1, test_data.rows, 1)
 print("Num training instances: {}".format(train_data.rows))
 print("Num test instances: {}".format(test_data.rows))
 
-decision_tree = tree.DecisionTreeClassifier()
+class_names = ["Bot", "User"]
+feature_names = [
+    # "Average Number of Tweets",
+    # "Contributors Enables",
+    # "Default Profile",
+    # "Default Profile Image",
+    # "Favorite Average",
+    # "Favorites Count",
+    # "Followers Count",
+    # "Friends Count",
+    # "Hashtags Average",
+    # "Listed Count",
+    # "Media Average",
+    # "Protected",
+    # "Quote Average",
+    # "Reply Average",
+    # "Retweet Average",
+    # "Statuses Count",
+    # "Symbols Average",
+    # "Tweet Regularity",
+    # "URL",
+    # "URLs Average",
+    # "User Mentions Average",
+    # "Verified"
+
+    "Average Tweets per Day",
+    "Contributors Enabled",
+    "Default Profile Settings Enabled",
+    "Default Profile Image Enabled",
+    "Total Number of Favorites",
+    "Total Number of Followers",
+    "Number of Friends",
+    "Listed Count",
+    "Average Hashtags per Tweet",
+    "Account is Protected",
+    "Average Media Count per Tweet",
+    "Average Favorites per Tweet",
+    "Averages Quotes per Tweet",
+    "Average Replys per Tweet",
+    "Average Retweets",
+    "Average URLs per Tweet",
+    "Average User Mentions per Tweet",
+    "Average Symbols per Tweet",
+    "Total Statuses Count",
+    "Tweet Regularity",
+    "Has a custom URL",
+    "Verified Twitter Account"
+]
+
+# decision_tree = tree.DecisionTreeClassifier()
+# decision_tree = tree.DecisionTreeClassifier(max_features=7)
+# decision_tree = tree.DecisionTreeClassifier(max_features=3)
+decision_tree = tree.DecisionTreeClassifier(max_leaf_nodes=10)
 decision_tree = decision_tree.fit(train_features.data, train_labels.col(0))
 
 score = decision_tree.score(test_features.data, test_labels.col(0))
 print("Accuracy was: {}".format(score))
 
-class_names = ["Bot", "User"]
-feature_names = [
-    "Average Number of Tweets",
-    "Contributors Enables",
-    "Default Profile",
-    "Default Profile Image",
-    "Favorite Average",
-    "Favorites Count",
-    "Followers Count",
-    "Friends Count",
-    "Hashtags Average",
-    "Listed Count",
-    "Media Average",
-    "Protected",
-    "Quote Average",
-    "Reply Average",
-    "Retweet Average",
-    "Statuses Count",
-    "Symbols Average",
-    "Tweet Regularity",
-    "URL",
-    "URLs Average",
-    "User Mentions Average",
-    "Verified"
-]
+# dot_data = tree.export_graphviz(decision_tree, out_file=None, 
+#                          feature_names=feature_names,  
+#                          class_names=class_names,  
+#                          filled=True, rounded=True,  
+#                          special_characters=True) 
 
 dot_data = tree.export_graphviz(decision_tree, out_file=None, 
                          feature_names=feature_names,  
                          class_names=class_names,  
                          filled=True, rounded=True,  
-                         special_characters=True) 
+                         special_characters=True,
+                         max_depth=4,
+                         label="root",
+                         impurity=False,
+                         proportion=True) 
+
 graph = graphviz.Source(dot_data)
-graph.render("DecisionTree_Twitter")
+# graph.render("DecisionTree_Twitter")
+graph.render("DecisionTree_Twitter_Pruned")
 
 # rand_forest = RandomForestClassifier()
 # rand_forest = rand_forest.fit(train_features.data, train_labels.col(0))

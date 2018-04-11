@@ -3,6 +3,7 @@ from __future__ import (absolute_import, division, print_function, unicode_liter
 import random
 import numpy as np
 import re
+import math
 
 def mode(a, axis=0):
 # taken from scipy code
@@ -262,7 +263,11 @@ class Matrix:
                 for j in range(self.rows):
                     v = self.get(j, i)
                     if v != self.MISSING:
-                        self.set(j, i, (v - min_val)/(max_val - min_val))
+                        if math.isnan((v - min_val)/(max_val - min_val)):
+                            # print("HERE IS A THING: {}".format((v - min_val)/(max_val - min_val)))
+                            self.set(j, i, 0.0)
+                        else:
+                            self.set(j, i, (v - min_val)/(max_val - min_val))
 
     # def print(self):
     def print_self(self):
